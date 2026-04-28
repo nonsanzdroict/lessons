@@ -1,0 +1,222 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.board{padding:1rem 0;display:flex;flex-direction:column;gap:1.5rem}
+.section-label{font-size:10px;font-weight:500;letter-spacing:0.07em;color:#888780;text-transform:uppercase;margin-bottom:0.6rem}
+.row{display:grid;gap:10px}
+.row-2{grid-template-columns:repeat(2,1fr)}
+.row-3{grid-template-columns:repeat(3,1fr)}
+.card{border-radius:12px;padding:1.1rem 1.2rem;border:1px solid}
+
+/* teal cards - task 1 */
+.ct{background:#E1F5EE;border-color:#9FE1CB}
+.ct .badge{background:#9FE1CB;color:#085041;font-size:10px;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.ct .num{font-size:22px;font-weight:500;color:#1D9E75;margin-bottom:4px}
+.ct h3{font-size:14px;font-weight:500;color:#085041;margin-bottom:6px}
+.ct p{font-size:12px;color:#0F6E56;line-height:1.55}
+
+/* purple cards - task 2 */
+.cp{background:#EEEDFE;border-color:#CECBF6}
+.cp .badge{background:#CECBF6;color:#26215C;font-size:10px;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.cp .num{font-size:22px;font-weight:500;color:#7F77DD;margin-bottom:4px}
+.cp h3{font-size:14px;font-weight:500;color:#26215C;margin-bottom:6px}
+.cp p{font-size:12px;color:#3C3489;line-height:1.55}
+
+/* coral cards - task 3 */
+.cc{background:#FAECE7;border-color:#F5C4B3}
+.cc .badge{background:#F5C4B3;color:#4A1B0C;font-size:10px;padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.cc .num{font-size:22px;font-weight:500;color:#D85A30;margin-bottom:4px}
+.cc h3{font-size:14px;font-weight:500;color:#4A1B0C;margin-bottom:6px}
+.cc p{font-size:12px;color:#712B13;line-height:1.55}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
+.chip-t{background:#9FE1CB;color:#085041;font-size:11px;padding:3px 10px;border-radius:20px;border:none}
+.chip-p{background:#CECBF6;color:#26215C;font-size:11px;padding:3px 10px;border-radius:20px;border:none}
+
+/* input boxes */
+.inbox{background:rgba(255,255,255,0.6);border:1px dashed #B4B2A9;border-radius:8px;padding:7px 10px;min-height:34px;width:100%;font-size:12px;color:#444441;margin-top:4px;outline:none;font-family:var(--font-sans)}
+.inbox:focus{border-color:#888780;background:rgba(255,255,255,0.9)}
+.inbox-tall{min-height:64px}
+.inbox-xl{min-height:90px}
+.field-label{font-size:11px;color:#5F5E5A;margin-top:8px;margin-bottom:2px}
+
+/* odd one out rows */
+.odd-row{margin-bottom:10px}
+.odd-title{font-size:12px;font-weight:500;color:#085041;margin-bottom:4px}
+.odd-words{font-size:12px;color:#0F6E56;margin-bottom:4px}
+
+/* quote bubbles */
+.bubble{background:rgba(255,255,255,0.7);border:1px solid #CECBF6;border-radius:10px;padding:8px 12px;font-size:12px;color:#26215C;margin-bottom:6px;font-style:italic}
+
+/* reflection stickers */
+.stickers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:0.5rem}
+.sticker{border-radius:12px;padding:1rem;min-height:80px;display:flex;flex-direction:column;justify-content:space-between}
+.st1{background:#FAEEDA;border:1px solid #FAC775}
+.st2{background:#E1F5EE;border:1px solid #9FE1CB}
+.st3{background:#EEEDFE;border:1px solid #CECBF6}
+.sticker-label{font-size:11px;font-weight:500;color:#5F5E5A}
+
+.divider{height:1px;background:#D3D1C7}
+</style>
+
+<div class="board">
+
+<div>
+  <div class="section-label">Task 1 — taste &amp; texture</div>
+  <div class="row row-2">
+
+    <div class="card ct">
+      <span class="badge">describe</span>
+      <div class="num">01</div>
+      <h3>Match the word to the product</h3>
+      <p>Drag each word to the product it best describes. One word can fit more than one product — but choose the strongest match.</p>
+      <div class="chips">
+        <span class="chip-t">earthy</span>
+        <span class="chip-t">sharp</span>
+        <span class="chip-t">funky</span>
+        <span class="chip-t">crunchy</span>
+        <span class="chip-t">mellow</span>
+        <span class="chip-t">pungent</span>
+        <span class="chip-t">tangy</span>
+        <span class="chip-t">mild</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+        <input class="inbox" placeholder="kimchi →">
+        <input class="inbox" placeholder="sauerkraut →">
+        <input class="inbox" placeholder="beet kvass →">
+        <input class="inbox" placeholder="pickled garlic →">
+      </div>
+      <p style="margin-top:8px;font-size:11px;color:#0F6E56">write your answers in the boxes above</p>
+    </div>
+
+    <div class="card ct">
+      <span class="badge">describe</span>
+      <div class="num">02</div>
+      <h3>Odd one out</h3>
+      <p style="margin-bottom:10px">Each row has 4 words. Cross out the one that doesn't fit the product. Explain your choice in one sentence.</p>
+      <div class="odd-row">
+        <div class="odd-title">fermented carrots</div>
+        <div class="odd-words">earthy · sweet · bitter · herby</div>
+        <input class="inbox" placeholder="because...">
+      </div>
+      <div class="odd-row">
+        <div class="odd-title">pickled cucumbers</div>
+        <div class="odd-words">tangy · garlicky · refreshing · rich</div>
+        <input class="inbox" placeholder="because...">
+      </div>
+      <div class="odd-row">
+        <div class="odd-title">fermented tomatoes</div>
+        <div class="odd-words">mild · garlicky · sharp · juicy</div>
+        <input class="inbox" placeholder="because...">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div>
+  <div class="section-label">Task 2 — recommendations</div>
+  <div class="row row-3">
+
+    <div class="card cp">
+      <span class="badge">recommend</span>
+      <div class="num">03</div>
+      <h3>Complete the sentences</h3>
+      <p style="margin-bottom:10px">Fill in the blanks using the products from the lesson. More than one answer may work — pick the best fit.</p>
+      <p>If you like <span style="color:#D4537E;font-weight:500">sour</span> and <span style="color:#1D9E75;font-weight:500">crunchy</span>, try</p>
+      <input class="inbox" style="margin-bottom:8px" placeholder="">
+      <p>If you prefer something <span style="color:#D4537E;font-weight:500">mild</span> but not too <span style="color:#D85A30;font-weight:500">acidic</span>, go for</p>
+      <input class="inbox" style="margin-bottom:8px" placeholder="">
+      <p>If you're into <span style="color:#7F77DD;font-weight:500">bold, garlicky</span> flavours,</p>
+      <input class="inbox" style="margin-bottom:4px" placeholder="">
+      <p>is a great option.</p>
+    </div>
+
+    <div class="card cp">
+      <span class="badge">recommend</span>
+      <div class="num">04</div>
+      <h3>Customer match</h3>
+      <p style="margin-bottom:10px">Read each customer's words. Write which product you'd recommend and one sentence why.</p>
+      <div class="bubble">"I want something juicy and not too intense."</div>
+      <input class="inbox" placeholder="I'd recommend..." style="margin-bottom:10px">
+      <div class="bubble">"I love strong, earthy tastes — the more unusual, the better."</div>
+      <input class="inbox" placeholder="I'd recommend...">
+    </div>
+
+    <div class="card cp">
+      <span class="badge">recommend</span>
+      <div class="num">05</div>
+      <h3>Write your own</h3>
+      <p style="margin-bottom:10px">Create 2 recommendation sentences for the startup's website. Use "if you like / prefer / want" + taste words from the lesson.</p>
+      <div class="field-label">Sentence 1:</div>
+      <textarea class="inbox inbox-tall" placeholder=""></textarea>
+      <div class="field-label">Sentence 2:</div>
+      <textarea class="inbox inbox-tall" placeholder=""></textarea>
+      <p style="margin-top:8px;font-size:11px;color:#3C3489">aim for B2 level — vary the structure</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div>
+  <div class="section-label">Task 3 — product language</div>
+  <div class="row row-2">
+
+    <div class="card cc">
+      <span class="badge">write</span>
+      <div class="num">06</div>
+      <h3>Label copy</h3>
+      <p style="margin-bottom:10px">Pick one product. Write 3 lines for its label — describe the taste and texture only. No "healthy", no "natural", no "good for you".</p>
+      <div class="field-label">Product chosen:</div>
+      <input class="inbox">
+      <div class="field-label">Your label copy (3 lines):</div>
+      <textarea class="inbox inbox-xl" placeholder=""></textarea>
+      <p style="margin-top:8px;font-size:11px;color:#712B13">think: what would make someone want to taste it?</p>
+    </div>
+
+    <div class="card cc">
+      <span class="badge">speak / write</span>
+      <div class="num">07</div>
+      <h3>60-second pitch</h3>
+      <p style="margin-bottom:10px">Prepare a short spoken pitch for one product. Write key points here, then record a voice note or be ready to say it next lesson.</p>
+      <div class="field-label">What is it?</div>
+      <input class="inbox">
+      <div class="field-label">How does it taste / feel?</div>
+      <input class="inbox">
+      <div class="field-label">Who would love it?</div>
+      <input class="inbox">
+      <div class="field-label">Why try it?</div>
+      <input class="inbox">
+      <p style="margin-top:10px;font-size:11px;color:#712B13">forbidden words: healthy · natural · good for you</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div>
+  <div class="section-label">Reflection sticker — fill in before next lesson</div>
+  <div class="stickers">
+    <div class="sticker st1">
+      <div class="sticker-label">one new word I'll use</div>
+      <input class="inbox" style="background:rgba(255,255,255,0.5);border-color:#FAC775">
+    </div>
+    <div class="sticker st2">
+      <div class="sticker-label">something I found tricky</div>
+      <input class="inbox" style="background:rgba(255,255,255,0.5);border-color:#9FE1CB">
+    </div>
+    <div class="sticker st3">
+      <div class="sticker-label">a question I have</div>
+      <input class="inbox" style="background:rgba(255,255,255,0.5);border-color:#CECBF6">
+    </div>
+  </div>
+</div>
+
+</div>
