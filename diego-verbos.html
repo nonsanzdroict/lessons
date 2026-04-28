@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El día de Diego 🌞</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ec;
+    --yellow: #f5c842;
+    --yellow-light: #fdf0b0;
+    --blue: #4a90d9;
+    --blue-light: #d6eaff;
+    --red: #e05a5a;
+    --red-light: #fde0e0;
+    --green: #4caf7d;
+    --green-light: #d4f5e2;
+    --purple: #9b6dcc;
+    --purple-light: #ecdeff;
+    --gray: #888;
+    --dark: #2a2a2a;
+    --shadow: 0 3px 12px rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+    color: var(--dark);
+  }
+
+  header { text-align: center; margin-bottom: 28px; }
+
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+
+  header p { font-size: 0.92rem; color: var(--gray); margin-top: 8px; line-height: 1.5; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: var(--shadow);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  #pool {
+    background: white;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  #pool h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  #cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 48px;
+  }
+
+  .card {
+    background: white;
+    border: 2px solid #e0d8cc;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  }
+
+  .card:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(0,0,0,0.12); border-color: #c0b8aa; }
+  .card.selected { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,0.18); border-color: #888; background: #f5f0e8; }
+  .card .verb { font-weight: 700; }
+  .card.correct { background: #e8faf0; border-color: var(--green); color: #2a7a50; }
+  .card.wrong   { background: #ffeaea; border-color: var(--red);   color: #c0392b; animation: shake 0.3s ease; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .zones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .zone-combo { grid-column: 1 / -1; }
+
+  .zone {
+    border-radius: 14px;
+    padding: 14px;
+    min-height: 130px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+  }
+
+  .zone:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+
+  .zone-yellow { background: var(--yellow-light); border: 2px dashed var(--yellow); }
+  .zone-blue   { background: var(--blue-light);   border: 2px dashed var(--blue); }
+  .zone-red    { background: var(--red-light);     border: 2px dashed var(--red); }
+  .zone-green  { background: var(--green-light);   border: 2px dashed var(--green); }
+  .zone-purple { background: var(--purple-light);  border: 2px dashed var(--purple); }
+
+  .zone h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    pointer-events: none;
+  }
+
+  .zone-example {
+    font-size: 0.72rem;
+    color: var(--gray);
+    margin-bottom: 10px;
+    font-style: italic;
+    pointer-events: none;
+  }
+
+  .zone-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 36px;
+    pointer-events: none;
+  }
+
+  .zone-cards .card {
+    font-size: 0.81rem;
+    padding: 6px 10px;
+    pointer-events: all;
+  }
+
+  .bottom {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+    margin-top: 24px;
+  }
+
+  .bottom h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    margin-bottom: 14px;
+    font-style: italic;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .name-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    border: 2px solid #e0d8cc;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus { border-color: var(--blue); }
+
+  button.submit {
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  button.submit:hover { background: #444; transform: translateY(-1px); }
+
+  #result-msg { margin-top: 14px; font-size: 0.95rem; font-weight: 600; color: var(--green); display: none; }
+
+  #score-bar { margin-top: 16px; display: none; }
+  #score-bar p { font-size: 0.85rem; color: var(--gray); margin-bottom: 6px; }
+  .bar-bg { background: #eee; border-radius: 8px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 8px; background: var(--green); transition: width 0.6s ease; }
+
+  button.check {
+    background: var(--yellow);
+    color: var(--dark);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 18px;
+    display: block;
+  }
+
+  button.check:hover { background: #e8bc30; transform: translateY(-1px); }
+
+  @media (max-width: 500px) {
+    .zones { grid-template-columns: 1fr; }
+    .zone-combo { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>El día de Diego 🌞</h1>
+  <p>Soy Diego. Vivo en Barcelona. Trabajo como project manager.<br>
+  Mi novio Mateo es diseñador y vive en Madrid. Tenemos una relación abierta. 💙</p>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot" style="background:var(--yellow)"></div> e → ie</div>
+  <div class="legend-item"><div class="dot" style="background:var(--blue)"></div> o → ue</div>
+  <div class="legend-item"><div class="dot" style="background:var(--red)"></div> -go / voy</div>
+  <div class="legend-item"><div class="dot" style="background:var(--green)"></div> con me / se / nos</div>
+  <div class="legend-item"><div class="dot" style="background:var(--purple)"></div> combo 🔀</div>
+</div>
+
+<div id="pool">
+  <h2>📋 Toca una frase → toca el grupo correcto</h2>
+  <div id="cards-container"></div>
+</div>
+
+<div class="zones">
+
+  <div class="zone zone-yellow" id="zone-ie" onclick="dropInZone('ie')">
+    <h3>🟡 e → ie</h3>
+    <div class="zone-example">empiezo, empieza, empiezas...</div>
+    <div class="zone-cards" id="cards-ie"></div>
+  </div>
+
+  <div class="zone zone-blue" id="zone-ue" onclick="dropInZone('ue')">
+    <h3>🔵 o → ue</h3>
+    <div class="zone-example">puedo, vuelvo, duermes...</div>
+    <div class="zone-cards" id="cards-ue"></div>
+  </div>
+
+  <div class="zone zone-red" id="zone-go" onclick="dropInZone('go')">
+    <h3>🔴 -go / voy</h3>
+    <div class="zone-example">salgo, hago, voy...</div>
+    <div class="zone-cards" id="cards-go"></div>
+  </div>
+
+  <div class="zone zone-green" id="zone-me" onclick="dropInZone('me')">
+    <h3>🟢 Con me / se / nos</h3>
+    <div class="zone-example">me ducho, se afeita, nos levantamos...</div>
+    <div class="zone-cards" id="cards-me"></div>
+  </div>
+
+  <div class="zone zone-purple zone-combo" id="zone-combo" onclick="dropInZone('combo')">
+    <h3>🟣 Combo — dos grupos a la vez</h3>
+    <div class="zone-example">me despierto (e→ie + me), me acuesto (o→ue + me), nos despertamos (nosotros + me)...</div>
+    <div class="zone-cards" id="cards-combo"></div>
+  </div>
+
+</div>
+
+<button class="check" onclick="checkAnswers()">✅ Comprobar respuestas</button>
+
+<div class="bottom">
+  <h2>📤 Enviar al profesor</h2>
+  <div class="name-row">
+    <input type="text" id="student-name" placeholder="Tu nombre...">
+    <button class="submit" onclick="sendResults()">Enviar al profesor</button>
+  </div>
+  <div id="score-bar">
+    <p id="score-text"></p>
+    <div class="bar-bg"><div class="bar-fill" id="bar-fill" style="width:0%"></div></div>
+  </div>
+  <div id="result-msg">✅ ¡Listo! Resultado enviado al profesor.</div>
+</div>
+
+<script>
+var SCRIPT_URL = "ВСТАВЬ_СЮДА_ССЫЛКУ_НА_СКРИПТ";
+
+const phrases = [
+  // 🟡 e→ie
+  { id:'c1',  html:'<span class="verb">Empiezo</span> a trabajar a las diez',                          zones:['ie'] },
+  { id:'c2',  html:'Mateo <span class="verb">empieza</span> a diseñar por la tarde',                    zones:['ie'] },
+  { id:'c3',  html:'¿A qué hora <span class="verb">empiezas</span> a trabajar?',                        zones:['ie'] },
+
+  // 🔵 o→ue
+  { id:'c4',  html:'<span class="verb">Puedo</span> trabajar desde casa o en la oficina',               zones:['ue'] },
+  { id:'c5',  html:'<span class="verb">Vuelvo</span> a casa a las ocho',                                zones:['ue'] },
+  { id:'c6',  html:'Mateo <span class="verb">vuelve</span> a Madrid el lunes',                          zones:['ue'] },
+  { id:'c7',  html:'¿Cuántas horas <span class="verb">duermes</span>?',                                 zones:['ue'] },
+  { id:'c8',  html:'A veces no <span class="verb">puedo</span> dormir bien',                            zones:['ue'] },
+  { id:'c9',  html:'Los domingos <span class="verb">volvemos</span> a Barcelona juntos',                zones:['ue'] },
+
+  // 🔴 -go / voy
+  { id:'c10', html:'<span class="verb">Salgo</span> a caminar por el Born',                             zones:['go'] },
+  { id:'c11', html:'A veces <span class="verb">salgo</span> con un chico a las nueve',                  zones:['go'] },
+  { id:'c12', html:'<span class="verb">Hago</span> la cena por la noche',                               zones:['go'] },
+  { id:'c13', html:'<span class="verb">Voy</span> al gimnasio por la tarde',                            zones:['go'] },
+  { id:'c14', html:'<span class="verb">Voy</span> a la oficina a las diez',                             zones:['go'] },
+  { id:'c15', html:'Mateo y yo <span class="verb">salimos</span> juntos los fines de semana',           zones:['go'] },
+  { id:'c16', html:'Siempre <span class="verb">hago</span> la cena cuando Mateo está en Barcelona',     zones:['go'] },
+
+  // 🟢 me/se/nos — sin alternancia
+  { id:'c17', html:'<span class="verb">Me lavo</span> la cara por la mañana',                           zones:['me'] },
+  { id:'c18', html:'<span class="verb">Me ducho</span> antes de las reuniones',                         zones:['me'] },
+  { id:'c19', html:'<span class="verb">Me llamo</span> Diego, soy project manager',                     zones:['me'] },
+  { id:'c20', html:'<span class="verb">Me levanto</span> a las siete y media',                          zones:['me'] },
+  { id:'c21', html:'Mateo <span class="verb">se ducha</span> y <span class="verb">se afeita</span>',    zones:['me'] },
+  { id:'c22', html:'<span class="verb">Me afeito</span> los lunes antes del trabajo',                   zones:['me'] },
+  { id:'c23', html:'A veces <span class="verb">me baño</span> por la noche',                            zones:['me'] },
+  { id:'c24', html:'Diego y Mateo <span class="verb">se levantan</span> tarde el sábado',               zones:['me'] },
+  { id:'c25', html:'<span class="verb">Nos duchamos</span> y desayunamos juntos',                       zones:['me'] },
+  { id:'c26', html:'<span class="verb">Nos levantamos</span> tarde los fines de semana',                zones:['me'] },
+
+  // 🟣 COMBO
+  { id:'c27', html:'<span class="verb">Me despierto</span> a las siete 🟡🟢',                          zones:['combo'] },
+  { id:'c28', html:'<span class="verb">Me despierto</span> temprano y abro las ventanas 🟡🟢',         zones:['combo'] },
+  { id:'c29', html:'<span class="verb">Me acuesto</span> tarde porque hablo con Mateo 🔵🟢',           zones:['combo'] },
+  { id:'c30', html:'<span class="verb">Nos despertamos</span> juntos el domingo 🟡🟢',                 zones:['combo'] },
+  { id:'c31', html:'Mateo <span class="verb">se despierta</span> con música, no con alarma 🟡🟢',      zones:['combo'] },
+];
+
+let selectedCard = null;
+let placedCards = {};
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function init() {
+  const container = document.getElementById('cards-container');
+  shuffle([...phrases]).forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.id = 'card-' + p.id;
+    div.innerHTML = p.html;
+    div.dataset.id = p.id;
+    div.onclick = (e) => { e.stopPropagation(); selectCard(p.id); };
+    container.appendChild(div);
+  });
+}
+
+function selectCard(id) {
+  if (selectedCard) {
+    const prev = document.getElementById('card-' + selectedCard);
+    if (prev) prev.classList.remove('selected');
+  }
+  if (selectedCard === id) { selectedCard = null; return; }
+  selectedCard = id;
+  const el = document.getElementById('card-' + id);
+  if (el) el.classList.add('selected');
+}
+
+function dropInZone(zone) {
+  if (!selectedCard) return;
+  const cardEl = document.getElementById('card-' + selectedCard);
+  if (!cardEl) return;
+
+  if (placedCards[selectedCard]) {
+    const oldContainer = document.getElementById('cards-' + placedCards[selectedCard]);
+    if (oldContainer && cardEl.parentNode === oldContainer) oldContainer.removeChild(cardEl);
+  }
+
+  const zoneContainer = document.getElementById('cards-' + zone);
+  cardEl.classList.remove('selected', 'correct', 'wrong');
+  zoneContainer.appendChild(cardEl);
+  placedCards[selectedCard] = zone;
+  selectedCard = null;
+}
+
+function checkAnswers() {
+  let correct = 0, total = 0;
+
+  phrases.forEach(p => {
+    const cardEl = document.getElementById('card-' + p.id);
+    if (!cardEl) return;
+    const placed = placedCards[p.id];
+    if (!placed) return;
+    total++;
+    cardEl.classList.remove('correct', 'wrong');
+    if (p.zones.includes(placed)) { cardEl.classList.add('correct'); correct++; }
+    else cardEl.classList.add('wrong');
+  });
+
+  const scoreBar = document.getElementById('score-bar');
+  const scoreText = document.getElementById('score-text');
+  const barFill = document.getElementById('bar-fill');
+
+  if (total > 0) {
+    scoreBar.style.display = 'block';
+    const pct = Math.round((correct / total) * 100);
+    scoreText.textContent = correct + ' de ' + total + ' colocadas correctamente (' + pct + '%)';
+    barFill.style.width = pct + '%';
+    barFill.style.background = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+  }
+}
+
+function sendResults() {
+  const name = document.getElementById('student-name').value.trim();
+  if (!name) { alert('Escribe tu nombre primero 😊'); return; }
+
+  let correct = 0, total = 0, errors = [];
+
+  phrases.forEach(p => {
+    const placed = placedCards[p.id];
+    if (!placed) return;
+    total++;
+    if (p.zones.includes(placed)) { correct++; }
+    else {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = p.html;
+      errors.push(tmp.textContent.trim() + ' → ' + placed + ' (correcto: ' + p.zones.join('/') + ')');
+    }
+  });
+
+  const notPlaced = phrases.filter(p => !placedCards[p.id]).length;
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: name,
+      task: 'El día de Diego — verbos irregulares',
+      correct: correct + ' de ' + total,
+      total: phrases.length,
+      errors: errors.length ? errors.join(' | ') : (notPlaced ? notPlaced + ' frases sin colocar' : 'sin errores')
+    })
+  });
+
+  document.getElementById('result-msg').style.display = 'block';
+  checkAnswers();
+}
+
+init();
+</script>
+</body>
+</html>
